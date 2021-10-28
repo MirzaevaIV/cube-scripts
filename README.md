@@ -13,3 +13,4 @@ vtk2cube.py
 The script reads binary vtk file from adf and xyz file with atomic coordinates and writes a cube file.
 
 Requirements: numpy, vtk
+
