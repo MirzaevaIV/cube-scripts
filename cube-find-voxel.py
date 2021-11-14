@@ -127,12 +127,26 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--cube', help = "Cube file name")
+    parser.add_argument('-p', '--points', help = "Name of the file with the list of points coordinates")
+    parser.add_argument('-o', '--output', help = "Output filename")
     args = parser.parse_args()
     print(args)
 
-    cubefile = input("Enter cube file name: ") 
-    pointsfile = input("Enter points list file name: ")
-    resfile = input("Enter results file name: ")
+    if args.cube == None:
+        cubefile = input("Enter cube file name: ")
+    else:
+        cubefile = args.cube
+   
+    if args.points == None:
+        pointsfile = input("Enter points list file name: ")
+    else:
+        pointsfile = args.points
+   
+    if args.output == None:
+        resfile = input("Enter results file name: ")
+    else:
+        resfile = args.output
+
     plist = readPoints(pointsfile)
     a = cubeParser.readCube(cubefile)
     results = []
