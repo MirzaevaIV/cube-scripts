@@ -14,3 +14,6 @@ The script reads binary vtk file from adf and xyz file with atomic coordinates a
 
 Requirements: numpy, vtk
 
+
+This is awesome project!
+
