@@ -1,12 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep  9 12:36:38 2021
-
-@author: dairdre
-"""
+#!/usr/bin/python3
 
 import numpy as np
+import argparse
+import sys
 
 class cubeParser():
     
@@ -14,7 +10,7 @@ class cubeParser():
         """ 
         Read file of Gaussian cube format into dictionary    
         params:  (fname: filename of cube file)       
-        returns: (data: dict)
+        returns: (data: dictionary)
         """        
         data = {}
         with open(fname, 'r') as cube:
@@ -115,7 +111,7 @@ class cubeParser():
     
 def readPoints(fname):
     """ 
-    Read text file the list of points (cartesian coordinates in bohrs)   
+    Read text file with the list of points (cartesian coordinates in bohrs)   
     params:  (fname: filename of the file with the list of points)       
     returns: (points: the list of lists, cartesian coordinates of the points in bohrs)
     """
@@ -129,7 +125,12 @@ def readPoints(fname):
 
 if __name__ == '__main__':
     
-    cubefile = input("Enter cube file name: ") #"RHO-man.cube"
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--cube', help = "Cube file name")
+    args = parser.parse_args()
+    print(args)
+
+    cubefile = input("Enter cube file name: ") 
     pointsfile = input("Enter points list file name: ")
     resfile = input("Enter results file name: ")
     plist = readPoints(pointsfile)
