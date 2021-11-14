@@ -16,11 +16,11 @@ Requirements: numpy, vtk, argparse
 
 usage: vtk2cube.py [-h] [-v VTK] [-c COORDS] [-o OUTPUT]
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -v VTK, --vtk VTK     VTK file name
-  -c COORDS, --coords COORDS      XYZ atomic coordinates file name
-  -o OUTPUT, --output OUTPUT      Output cube file name
+optional arguments: \
+  -h, --help            show this help message and exit \
+  -v VTK, --vtk VTK     VTK file name \
+  -c COORDS, --coords COORDS      XYZ atomic coordinates file name \
+  -o OUTPUT, --output OUTPUT      Output cube file name \
 
 
 Known problems
