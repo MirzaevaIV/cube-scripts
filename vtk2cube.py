@@ -3,8 +3,21 @@
 import numpy as np
 from vtk import vtkStructuredPointsReader
 from vtk.util import numpy_support as VN
+import argparse
+import sys
+
+el_list = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si',
+ 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni',
+ 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo',
+ 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba',
+ 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb',
+ 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi',
+ 'Po', 'At', 'Rn', 'Fr',  'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm',
+ 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt',
+ 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og']
 
 def readVTK(fname):
+    '''Reads VTK file into dictionary'''
     data = {}
     reader = vtkStructuredPointsReader()
     reader.SetFileName(fname)
@@ -20,6 +33,7 @@ def readVTK(fname):
     return data
 
 def readXYZ(fname):
+    '''Reads XYZ file into a list'''
     coords = []
     with open(fname, 'r') as xyz:
         coords.append(xyz.readline().strip().split())
@@ -29,10 +43,11 @@ def readXYZ(fname):
            coords.append(xyz.readline().strip().split())
     return coords
 
-def writeCube(fname, data, xyz, l):
+def writeCube(fname, data, xyz):
+    '''Takes dictionary with vtk data and list of atomic coordinates and writes a cube file'''
     with open(fname, 'w') as f:
         f.write("# converted from vtk \n")
-        f.write("# converted from vtk \n")
+        f.write("# We wanted the best, but it turned out like always \n")
         entry = "%8s %12s %12s %12s \n" % (xyz[0][0], data['Origin'][0], data['Origin'][1], data['Origin'][2])
         f.write(entry)
         entry = "%8s %12.8f %12.8f %12.8f \n" % (data['N_steps'][0], data['Steps'][0], 0.0, 0.0)
@@ -42,7 +57,7 @@ def writeCube(fname, data, xyz, l):
         entry = "%8s %12.8f %12.8f %12.8f \n" % (data['N_steps'][2], 0.0, 0.0, data['Steps'][2])
         f.write(entry)
         for i in range(int(xyz[0][0])):
-            el = l.index(xyz[i+1][0])+1
+            el = el_list.index(xyz[i+1][0])+1
             x = float(xyz[i+1][1])/0.52917720859
             y = float(xyz[i+1][2])/0.52917720859
             z = float(xyz[i+1][3])/0.52917720859
@@ -64,20 +79,31 @@ def writeCube(fname, data, xyz, l):
 
 if __name__ == '__main__':
    
-    el_list = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si',
- 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni',
- 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo',
- 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba',
- 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb',
- 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi',
- 'Po', 'At', 'Rn', 'Fr',  'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm',
- 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt',
- 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og']
-    vtkfile = input("Enter vtk file name: ")
-    coordsfile = input("Enter atomic coordinates file name: ")
-    cubefile = input("Enter resulting cube file name: ")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--vtk', help = "VTK file name")
+    parser.add_argument('-c', '--coords', help = "XYZ atomic coordinates file name")
+    parser.add_argument('-o', '--output', help = "Output cube file name")
+    args = parser.parse_args()
+    print(args)
+
+    if args.vtk == None:
+        vtkfile = input("Enter vtk file name: ")
+    else:
+        vtkfile = args.vtk
+   
+    if args.coords == None:
+        coordsfile = input("Enter atomic coordinates file name: ")
+    else:
+        coordsfile = args.coords
+   
+    if args.output == None:
+        cubefile = input("Enter resulting cube file name: ")
+    else:
+        cubefile = args.output
+
+
     cubedata = readVTK(vtkfile)
     coords = readXYZ(coordsfile)
-    writeCube(cubefile, cubedata, coords, el_list)
+    writeCube(cubefile, cubedata, coords)
 
 
