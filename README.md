@@ -8,6 +8,15 @@ The script finds the values of the property in the set of given points. Points a
 
 Requirements: numpy, argparse
 
+usage: cube-find-voxel.py [-h] [-c CUBE] [-p POINTS] [-o OUTPUT]
+
+optional arguments: \
+  -h, --help   --         show this help message and exit \
+  -c CUBE, --cube CUBE  --  Cube file name \
+  -p POINTS, --points POINTS  --   Name of the file with the list of points coordinates \
+  -o OUTPUT, --output OUTPUT  --   Output filename
+
+
 vtk2cube.py
 --------------------
 The script reads binary vtk file from adf and xyz file with atomic coordinates and writes a cube file.
