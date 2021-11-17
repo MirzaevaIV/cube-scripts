@@ -66,7 +66,7 @@ def writeCube(fname, data, xyz):
         entry = ""
         k = 0
         for i in range(data['N_steps'][0]*data['N_steps'][1]*data['N_steps'][2]):
-            ent = "%16.12f" % float(data['voxels'][i])
+            ent = "%.12f " % float(data['voxels'][i])
             entry += ent
             k += 1
             if k == 9:
