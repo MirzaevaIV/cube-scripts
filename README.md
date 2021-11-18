@@ -8,13 +8,16 @@ The script finds the values of the property in the set of given points. Points a
 
 Requirements: numpy, argparse
 
-usage: cube-find-voxel.py [-h] [-c CUBE] [-p POINTS] [-o OUTPUT]
+usage: cube-find-voxel.py [-h] [-c CUBE] [-p POINTS] [-o OUTPUT] [-f | -a | -b]
 
 optional arguments: \
   -h, --help   --         show this help message and exit \
   -c CUBE, --cube CUBE  --  Cube file name \
   -p POINTS, --points POINTS  --   Name of the file with the list of points coordinates \
-  -o OUTPUT, --output OUTPUT  --   Output filename
+  -o OUTPUT, --output OUTPUT  --   Output filename \
+  -f, --fractional      points coordinates are given in fractional coordinates (default) \
+  -a, --angstrom        points coordinates are given in angstroms \
+  -b, --bohr            points coordinates are given in bohrs
 
 
 vtk2cube.py
@@ -23,17 +26,13 @@ The script reads binary vtk file from adf and xyz file with atomic coordinates a
 
 Requirements: numpy, vtk, argparse
 
-usage: vtk2cube.py [-h] [-v VTK] [-c COORDS] [-o OUTPUT] [-f | -a | -b]
+usage: vtk2cube.py [-h] [-v VTK] [-c COORDS] [-o OUTPUT] 
 
 optional arguments: \
   -h, --help     --       show this help message and exit \
   -v VTK, --vtk VTK  --   VTK file name \
   -c COORDS, --coords COORDS  --    XYZ atomic coordinates file name \
   -o OUTPUT, --output OUTPUT  --    Output cube file name \
-  -f, --fractional      points coordinates are given in fractional coordinates (default) \
-  -a, --angstrom        points coordinates are given in angstroms \
-  -b, --bohr            points coordinates are given in bohrs
-
 
 
 Known problems
