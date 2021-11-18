@@ -29,7 +29,12 @@ optional arguments: \
   -h, --help     --       show this help message and exit \
   -v VTK, --vtk VTK  --   VTK file name \
   -c COORDS, --coords COORDS  --    XYZ atomic coordinates file name \
-  -o OUTPUT, --output OUTPUT  --    Output cube file name 
+  -o OUTPUT, --output OUTPUT  --    Output cube file name \
+  \
+  -f, --fractional      points coordinates are given in fractional coordinates (default) \
+  -a, --angstrom        points coordinates are given in angstroms \
+  -b, --bohr            points coordinates are given in bohrs
+
 
 
 Known problems
