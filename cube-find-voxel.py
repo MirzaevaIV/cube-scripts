@@ -35,7 +35,7 @@ class cubeParser():
         data['voxels'] = np.reshape(data['voxels'], (data['N_asteps'],data['N_bsteps'],data['N_csteps']))        
         return data
     
-    def getVoxel(vec, cube):
+    def getVoxelB(vec, cube):
         """ 
         Get the value of the property in the point  
         params:  (vec: np.array of cartesian coordinates of the point in bohrs; 
@@ -50,10 +50,21 @@ class cubeParser():
         val = cube['voxels'][int(internalCoords[0]), int(internalCoords[1]), int(internalCoords[2])]
         return val
 
-    def getVoxelInternal(vec, cube):
+    def getVoxelA(vec, cube):
         """ 
         Get the value of the property in the point  
-        params:  (vec: np.array of the internal coordinates of the point; 
+        params:  (vec: np.array of cartesian coordinates of the point in angstroms; 
+                  cube: dictionary with property cube data)       
+        returns: (val: the value of the property)
+        """
+        vec1 = vec/0.5291772109
+        val = cubeParser.getVoxelB(vec1, cube)
+        return val
+
+    def getVoxelFractional(vec, cube):
+        """ 
+        Get the value of the property in the point  
+        params:  (vec: np.array of the fractional coordinates of the point; 
                   cube: dictionary with property cube data)       
         returns: (val: the value of the property)
         """
@@ -129,6 +140,10 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--cube', help = "Cube file name")
     parser.add_argument('-p', '--points', help = "Name of the file with the list of points coordinates")
     parser.add_argument('-o', '--output', help = "Output filename")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-f', '--fractional', action="store_true", help = " points coordinates are given in fractional coordinates (default)")
+    group.add_argument('-a', '--angstrom', action="store_true", help = " points coordinates are given in angstroms")
+    group.add_argument('-b', '--bohr', action="store_true", help = " points coordinates are given in bohrs")
     args = parser.parse_args()
     print(args)
 
@@ -150,8 +165,19 @@ if __name__ == '__main__':
     plist = readPoints(pointsfile)
     a = cubeParser.readCube(cubefile)
     results = []
-    for i in plist:
-        results.append(cubeParser.getVoxelInternal(np.array(i), a))
+
+    if args.angstrom:
+        for i in plist:
+            results.append(cubeParser.getVoxelA(np.array(i), a))
+
+    elif args.bohr:
+        for i in plist:
+            results.append(cubeParser.getVoxelB(np.array(i), a))
+
+    else:
+        for i in plist:
+            results.append(cubeParser.getVoxelFractional(np.array(i), a))
+
     with open(resfile, 'w') as f:
         for item in results:
             f.write("%s \n" % item)
