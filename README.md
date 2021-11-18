@@ -23,14 +23,13 @@ The script reads binary vtk file from adf and xyz file with atomic coordinates a
 
 Requirements: numpy, vtk, argparse
 
-usage: vtk2cube.py [-h] [-v VTK] [-c COORDS] [-o OUTPUT]
+usage: vtk2cube.py [-h] [-v VTK] [-c COORDS] [-o OUTPUT] [-f | -a | -b]
 
 optional arguments: \
   -h, --help     --       show this help message and exit \
   -v VTK, --vtk VTK  --   VTK file name \
   -c COORDS, --coords COORDS  --    XYZ atomic coordinates file name \
   -o OUTPUT, --output OUTPUT  --    Output cube file name \
-  \
   -f, --fractional      points coordinates are given in fractional coordinates (default) \
   -a, --angstrom        points coordinates are given in angstroms \
   -b, --bohr            points coordinates are given in bohrs
