@@ -35,7 +35,20 @@ optional arguments: \
   -o OUTPUT, --output OUTPUT  --    Output cube file name \
 
 
+multiplicate-cube.py
+------------------------
+usage: multiplicate-cube.py [-h] [-c CUBE] [-o OUTPUT] [-r Nx Ny Nz]
+
+optional arguments: \
+  -h, --help     show this help message and exit \
+  -c CUBE, --cube CUBE  Cube file name \
+  -o OUTPUT, --output OUTPUT    Output filename \
+  -r Nx Ny Nz, --repite Nx Ny Nz      Number of repetitions. Nx - along the first translation vector, \
+  Ny - along the second translation vector, Nz - along the third translation vector. 
+
+
 Known problems
 --------------------
-vtk2cube.py doesn't work with anaconda python on windows
+vtk2cube.py doesn't work with anaconda python on windows \
+multiplicate-cube.py works only with rectangular mesh
 
